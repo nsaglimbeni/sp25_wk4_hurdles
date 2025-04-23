@@ -9,7 +9,7 @@ library(tidyverse)
 
 # Part 1 count data 
 
-#simulate zero-inflated data
+#simulate zero-inflated count data
 set.seed(101)
 n <- 500
 elevation <- scale(rnorm(n, mean = 1000, sd = 100))
@@ -49,7 +49,7 @@ summary(p_model)
 
 check_model(p_model, check = "pp_check") # predictions don't match observed 
 check_model(p_model, check = "overdispersion") # we are overdispersed
-check_model(p_model, check = "homogeneity") # heteroskedasticity 
+check_model(p_model, check = "homogeneity") # heteroscedasticity 
 check_model(p_model, check = "qq") # way off
 
 
@@ -62,7 +62,7 @@ summary(zip_model)
 
 check_model(zip_model, check = "pp_check") 
 check_model(zip_model, check = "overdispersion") # still overdispersed
-check_model(zip_model, check = "homogeneity") # still heteroskedastic
+check_model(zip_model, check = "homogeneity") # still heteroscedastic
 check_model(zip_model, check = "qq") 
 
 
@@ -75,7 +75,7 @@ summary(hurdle_model)
 
 check_model(hurdle_model, check = "pp_check")
 check_model(hurdle_model, check = "overdispersion") # still overdispersed
-check_model(hurdle_model, check = "homogeneity") # still heteroskedastic
+check_model(hurdle_model, check = "homogeneity") # still heteroscedastic
 check_model(hurdle_model, check = "qq") 
 
 
@@ -97,7 +97,7 @@ summary(nb_model)
 
 check_model(nb_model, check = "pp_check") # better than basic poisson but still iffy near 0
 check_model(nb_model, check = "overdispersion") # major overdispersion
-check_model(nb_model, check = "homogeneity") #  heteroskedastic
+check_model(nb_model, check = "homogeneity") #  heteroscedastic
 check_model(nb_model, check = "qq") # bad
 
 
@@ -237,7 +237,7 @@ check_model(hurdle_gamma_model, check = "qq")
 AIC_table2 <- AIC(tweedie_model2, hurdle_norm_model, hurdle_gamma_model)
 View(AIC_table2)
 
-# we still have issues with our model... ideas? maybe a bigger question about heteroskedacity... nonlinear model?
+# we still have issues with our model... ideas? maybe a bigger question about heteroscedacity... nonlinear model?
 
 # other option...data transformations?
 
@@ -270,7 +270,6 @@ summary(hurdle_norm_model2)
 check_model(hurdle_norm_model2, check = "pp_check") 
 check_model(hurdle_norm_model2, check = "homogeneity")  
 check_model(hurdle_norm_model2, check = "qq")
-
 
 AIC_table3 <- AIC(tweedie_model2, hurdle_norm_model, hurdle_gamma_model, hurdle_gamma_model2, hurdle_norm_model2)
 View(AIC_table3)
