@@ -3,7 +3,7 @@
     "path": "~/git/sp25_wk4_hurdles/sp25_wk4_hurdles.R",
     "project_path": "sp25_wk4_hurdles.R",
     "type": "r_source",
-    "hash": "3170771388",
+    "hash": "476867101",
     "contents": "",
     "dirty": false,
     "created": 1745442479435.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "4,16",
-        "scrollLine": "0"
+        "cursorPosition": "172,28",
+        "scrollLine": "158"
     },
     "folds": "",
-    "lastKnownWriteTime": 1745445060,
+    "lastKnownWriteTime": 1745449534,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1745445060794,
+    "last_content_update": 1745449534250,
     "read_only": false,
     "read_only_alternatives": []
 }

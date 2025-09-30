@@ -4,7 +4,7 @@
 # load required packages
 library(glmmTMB)
 library(performance)
-library(MuMIn)
+#library(MuMIn)
 library(tidyverse)
 
 # Part 1 count data 
@@ -21,7 +21,7 @@ lambda <- exp(1 + 0.6 * elevation - 0.5 * soil_moisture +
                 ifelse(treatment == "weeded", 0.7, 0))
 
 # Simulate counts with excess zeros
-zero_prob <- 0.5
+zero_prob <- 0.5 
 abundance <- rpois(n, lambda)
 abundance[rbinom(n, 1, zero_prob) == 1] <- 0
 
@@ -46,18 +46,22 @@ p_model <- glmmTMB(abundance ~ elevation + soil_moisture + treatment,
 summary(p_model)
 
 #check our model using check_mopdel from performance package
-
+check_model(p_model)
 check_model(p_model, check = "pp_check") # predictions don't match observed 
 check_model(p_model, check = "overdispersion") # we are overdispersed
 check_model(p_model, check = "homogeneity") # heteroscedasticity 
 check_model(p_model, check = "qq") # way off
 
-
 # model 2: ZIP
-zip_model <- glmmTMB(abundance ~ elevation + soil_moisture + treatment,
-                     ziformula = ~ elevation + soil_moisture + treatment,
+zip_model1 <- glmmTMB(abundance ~ elevation + soil_moisture + treatment,
+                     ziformula = ~ 1,
                      family = poisson(), 
                      data = rare_plant_df)
+
+zip_model <- glmmTMB(abundance ~ elevation + soil_moisture + treatment,
+                      ziformula = ~ 1,
+                      family = truncated_poisson(), 
+                      data = rare_plant_df)
 summary(zip_model)
 
 check_model(zip_model, check = "pp_check") 
@@ -78,9 +82,12 @@ check_model(hurdle_model, check = "overdispersion") # still overdispersed
 check_model(hurdle_model, check = "homogeneity") # still heteroscedastic
 check_model(hurdle_model, check = "qq") 
 
+summary(p_model)
+summary(zip_model)
+summary(hurdle_model)
 
 #hurdle and ZIP do a better job than basic poisson model. they have basically identical AIC. 
-AIC(zip_model, hurdle_model, p_model)
+AIC(zip_model1, zip_model, hurdle_model, p_model)
 
 #key distinction between hurdle and ZIP are how they handle stuctural vs sampling zeros. 
 #in our case we have minimal structural zeros, hence similar performance
